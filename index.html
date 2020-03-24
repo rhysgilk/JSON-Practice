@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JSON Practice</title>
+</head>
+
+<body>
+    <script language="javascript">
+    function parser(obj){
+        var artistList = "";
+        if (!(typeof obj.artist === 'string' || obj.artist instanceof String)){
+            for (var i = 0; i < obj.artist.length - 1; i++){
+                artistList += obj.artist[i] + ", ";
+            }
+            artistList += obj.artist[obj.artist.length - 1];
+        }
+        else
+            artistList += obj.artist;
+        var genresList = "";
+        if (!(typeof obj.genres === 'string' || obj.genres instanceof String)){
+            for (var i = 0; i < obj.genres.length - 1; i++){
+                genresList += obj.genres[i] + ", ";
+            }
+            genresList += obj.genres[obj.genres.length - 1];
+        }
+        else
+            genresList += obj.genres;
+        return obj.song + "<br>" + "Artist: " + artistList + "<br>" + 
+               "Genre: " + genresList + "<br>" + "Year: " + obj.year + "<br><br>";
+    }
+    songs = [
+        {
+            "id":1, "song":"Bittersweet", "artist":"Carter Reeves", "genres":["Alternative","Indie"], "year":"2018",
+            toJSON() {
+                return parser(this);
+            }
+        },
+        {
+            "id":2, "song":"Say So", "artist":"Doja Cat", "genres":"Hip Hop", "year":"2019",
+            toJSON() {
+                return parser(this);
+            }
+        },
+        {
+            "id":3, "song":"Who Owns Who?", "artist":"Joywave", "genres":["Alternative","Rock"], "year":"2020",
+            toJSON() {
+                return parser(this);
+            }
+        },
+        {
+            "id":4, "song":"Promises", "artist":"Grouplove", "genres":["Alternative","Rock"], "year":"2020",
+            toJSON() {
+                return parser(this);
+            }
+        },
+        {
+            "id":5, "song":"Physical", "artist":"Dua Lipa", "genres":"Pop", "year":"2020",
+            toJSON() {
+                return parser(this);
+            }
+        },
+        {
+            "id":6, "song":"No Time To Die", "artist":"Billie Eilish", "genres":["Indie","Pop"], "year":"2020",
+            toJSON() {
+                return parser(this);
+            }
+        },
+        {
+            "id":7, "song":"Never Let You Go", "artist":["RAC","Matthew Koma","Hilary Duff"], "genres":["Indie","Rock"], "year":"2020",
+            toJSON() {
+                return parser(this);
+            }
+        },
+        {
+            "id":8, "song":"Lately III", "artist":"COIN", "genres":["Indie","Pop","Rock"], "year":"2020",
+            toJSON() {
+                return parser(this);
+            }
+        },
+        {
+            "id":9, "song":"Flip Phones", "artist":"Sjowgren", "genres":["Alternative","Indie"], "year":"2020",
+            toJSON() {
+                return parser(this);
+            }
+        },
+        {
+            "id":10, "song":"Let's Be Friends", "artist":"Carly Rae Jepsen", "genres":"Pop", "year":"2020",
+            toJSON() {
+                return parser(this);
+            }
+        }
+    ]   // End Song
+    for (var i = 0; i < 10; i++) {
+        strSong  = JSON.stringify(songs[i]);
+        jsonSong = JSON.parse(strSong);
+        document.write (jsonSong + "<br>");
+    }
+    </script>
+    <form>
+        <select id="genreForm" name="Genres" form="genreForm">
+            <option Id='Alternative'>Alternative</option>
+            <option Id='Hip Hop'>Hip Hop</option>
+            <option Id='Indie'>Indie</option>
+            <option Id='Pop'>Pop</option>
+            <option Id='Rock'>Rock</option>
+        </select>
+        <input type="Button" value="Filter" onclick="generateGenres()"/>
+    </form>
+    <br/><br/><div Id="write"></div>
+    <script language="javascript">
+        function displayGenre(obj, gens){
+            var genresList = "";
+            if (!(typeof obj.genres === 'string' || obj.genres instanceof String)){
+                for (var i = 0; i < obj.genres.length; i++){
+                    if (obj.genres[i] == gens){
+                        return (obj.song + "<br>");
+                        alert(obj.song);
+                    }
+                }
+            }else{
+                if (obj.genres == gens){
+                    return (obj.song + "<br>");
+                }
+            }
+            return "";
+        }
+        function generateGenres(){
+            var toFind = "";
+            if (document.getElementById("Alternative").selected)
+                toFind = "Alternative";
+            else if (document.getElementById("Hip Hop").selected)
+                toFind = "Hip Hop";
+            else if (document.getElementById("Indie").selected)
+                toFind = "Indie";
+            else if (document.getElementById("Pop").selected)
+                toFind = "Pop";
+            else if (document.getElementById("Rock").selected)
+                toFind = "Rock";
+            var text = "";
+            for (var i = 0; i < 10; i++){
+                text += displayGenre(songs[i], toFind);
+            }
+            document.getElementById("write").innerHTML = text;
+        }
+    </script>
+</body>
+
+</html>
